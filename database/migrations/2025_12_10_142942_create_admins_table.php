@@ -11,21 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inventaris', function (Blueprint $table) {
+        Schema::create('admins', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_alat');
-            $table->string('kode')->unique();
-            $table->text('deskripsi')->nullable();
-            $table->integer('jumlah');
-            $table->enum('status', ['tersedia', 'tidak tersedia'])->default('tersedia');
+            $table->string('username');
+            $table->string('password');
             $table->timestamps();
         });
     }
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('inventaris');
+        Schema::dropIfExists('admins');
     }
 };
