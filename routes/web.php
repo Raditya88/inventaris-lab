@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InventarisController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,16 +42,20 @@ Route::middleware('admin')->group(function () {
 
     // admin menu
     Route::get('/dashboard', function() {
-        return view('dashboard'); // nanti kita buat
+        return view('dashboard', [AdminController::class, 'dashboard'])->name('dashboard'); // nanti kita buat
     });
 
     // peminjaman
     Route::get('/peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman.index');
-    Route::get('/peminjaman/approve/{id}', [PeminjamanController::class, 'approve']);
-    Route::get('/peminjaman/reject/{id}', [PeminjamanController::class, 'reject']);
+    Route::get('/peminjaman/approve/{id}', [PeminjamanController::class, 'approve'])->name('peminjaman.approve');
+    Route::get('/peminjaman/reject/{id}', [PeminjamanController::class, 'reject'])->name('peminjaman.reject');
 
     // inventaris CRUD
     Route::resource('inventaris', InventarisController::class);
+
+    //laporan PDF
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/pdf', [ReportController::class, 'exportPdf'])->name('reports.pdf');
 });
 
 
